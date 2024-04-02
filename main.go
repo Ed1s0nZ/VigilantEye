@@ -31,17 +31,6 @@ func init() {
 	Db = database
 }
 
-func main() {
-	c := cron.New()
-	c.AddFunc("*/5 * * * *", func() { //每五分钟执行一次
-		go monitorPhoneNumbers()
-		go monitorIDNumbers()
-	})
-
-	c.Start()
-	select {}
-}
-
 func monitorPhoneNumbers() {
 	query := `SELECT respbody, hashvalue FROM xxx WHERE timestamp > ? AND respbody REGEXP '\\b1[3456789][0-9]{9}\\b'`
 	monitor(query, "phone")
@@ -83,4 +72,15 @@ func sendAlert(hashvalue, monitorType string) {
 	log.Printf("Alert for '%s', hashvalue: %s\n", monitorType, hashvalue)
 	Robots(true, hashvalue, monitorType)
 	robotsAtAll(true)
+}
+
+func main() {
+	c := cron.New()
+	c.AddFunc("*/5 * * * *", func() { //每五分钟执行一次
+		go monitorPhoneNumbers()
+		go monitorIDNumbers()
+	})
+
+	c.Start()
+	select {}
 }
