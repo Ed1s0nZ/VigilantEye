@@ -25,7 +25,7 @@ func Robots(mentionAll bool, hashvale string, monitorType string) {
 	}
 	dataJsonStr := fmt.Sprintf(`{
 		"msgtype": "markdown", "markdown": {
-			"content": "<font color=\"red\">[测试流敏感信息监控告警] </font>\n发现hashvalue为 ` + hashvale + ` 响应包中包含明文<font color=\"warning\">` + a + `</font>, 请登录数据库查看。` + `\n时间 : ` + timenow() + `", 
+			"content": "<font color=\"red\">[测试流量敏感信息监控告警] </font>\n发现hashvalue为 ` + hashvale + ` 响应包中包含明文<font color=\"warning\">` + a + `</font>, 请登录数据库查看。` + `\n时间 : ` + timenow() + `", 
 			"mentioned_list": ["` + mentionAllStr + `"]}}`)
 	fmt.Println(dataJsonStr)
 	resp, err := http.Post(
